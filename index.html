@@ -272,7 +272,7 @@ let st=null,hero=null,boss=null;
 const SENS=1.25;
 const ptr={id:null,lx:0,ly:0};
 const aim={x:0,y:0};
-const clampAim=()=>{if(!hero)return;aim.x=Math.max(hero.r,Math.min(W-hero.r,aim.x));aim.y=Math.max(H*.3,Math.min(H-hero.r-10,aim.y))};
+const clampAim=()=>{if(!hero)return;aim.x=Math.max(hero.r,Math.min(W-hero.r,aim.x));aim.y=Math.max(H*.48,Math.min(H-hero.r-10,aim.y))};
 const keys={};
 let best=0;try{best=+localStorage.getItem('facebattle_best')||0}catch(e){}
 
@@ -344,7 +344,7 @@ function update(dt){
     }
     hero.x+=(tx-hero.x)*k;hero.y+=(ty-hero.y)*k;
     hero.x=Math.max(hero.r,Math.min(W-hero.r,hero.x));
-    hero.y=Math.max(H*.3,Math.min(H-hero.r-10,hero.y));
+    hero.y=Math.max(H*.48,Math.min(H-hero.r-10,hero.y));
     if(kb){aim.x=hero.x;aim.y=hero.y}
 
     s.fire-=dt;
