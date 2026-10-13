@@ -277,7 +277,7 @@ const keys={};
 let best=0;try{best=+localStorage.getItem('facebattle_best')||0}catch(e){}
 
 function spawnBoss(){
-  const L=st.level,max=40+15*L;
+  const L=st.level,max=Math.round((40+10*L)*1.5625);
   const r=S*.115,fs=Math.max(22,S*.045),hudBottom=10+fs*1.35+38;
   boss={id:uid++,x:W/2,y:-S*.2,ty:hudBottom+r*1.2+S*.02,r,hp:max,max,t:0,shoot:1.2,flash:0,active:false,minion:2};
 }
@@ -393,23 +393,23 @@ function update(dt){
       const L=s.level,amp=W/2-boss.r*1.2;
       // the sway starts from the centre at the moment the boss arrives, so there is no sudden jump
       const tm=boss.t-boss.ta;
-      boss.x=W/2+Math.sin(tm*(.8+.1*L))*amp;
+      boss.x=W/2+Math.sin(tm*(.7+.06*L))*amp;
       boss.yy=boss.ty+Math.sin(tm*1.7)*S*.02;
       boss.shoot-=dt;
       if(boss.shoot<=0&&!s.over){
-        boss.shoot=Math.max(.5,1.35-.12*L);
-        const fan=L>=4?2:(L>=2?1:0);
+        boss.shoot=Math.max(1,2.4-.08*L);
+        const nb=L>=6?3:(L>=4?2:1);
         const base=Math.atan2(hero.y-boss.y,hero.x-boss.x);
-        const v=Math.min(S*.85,S*(.42+.05*L));
-        for(let k=-fan;k<=fan;k++){
-          const a=base+k*.32;
+        const v=Math.min(S*.43,S*(.17+.018*L));
+        for(let k=0;k<nb;k++){
+          const a=base+(k-(nb-1)/2)*.32;
           s.bombs.push({id:uid++,x:boss.x,y:boss.y+boss.r*.5,vx:Math.cos(a)*v,vy:Math.sin(a)*v,r:S*.04,rot:0,vr:rnd(-5,5)});
         }
       }
       if(s.triple<=0&&s.shield<=0)boss.minion-=dt;
       if(boss.minion<=0&&!s.over){
-        boss.minion=Math.max(1.3,3.4-.25*L);
-        s.minions.push({id:uid++,x0:rnd(W*.12,W*.88),x:0,y:-S*.05,vy:S*(.2+.015*L),t:0,r:S*.045,ph:rnd(0,6)});
+        boss.minion=Math.max(1.6,3.6-.15*L);
+        s.minions.push({id:uid++,x0:rnd(W*.12,W*.88),x:0,y:-S*.05,vy:S*(.17+.012*L),t:0,r:S*.045,ph:rnd(0,6)});
       }
     }
   }else if(s.pause>0){
